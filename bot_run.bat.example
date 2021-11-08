@@ -1,0 +1,11 @@
+@echo off
+
+call %~dp0***PATH***\venv\Scripts\activate
+
+cd %~dp0***PATH***
+
+set TOKEN=***your token
+
+python ***name***Bot.py
+
+pause
