@@ -1,6 +1,9 @@
 from aiogram import types, Dispatcher
 from create_bot import dp, bot
 from keyboards import kb_client
+from aiogram.types import ReplyKeyboardRemove
+
+from data_base import sqlite_db
 
 
 # @dp.message_handler(commands=['start', 'help'])
@@ -22,12 +25,13 @@ async def pizza_place_command(message: types.Message):
     await bot.send_message(message.from_user.id, "Площадь Мужества, 17")
 
 
-# @dp.message_handler(commands=["меню"])
-# async def pizza_menu_command(message: types.Message):
-#     for ret in cur.execute('SELECT*FROM menu').fetchall():
-#         await bot.send_photo(message.from_user.id, ret[0], f'{ret[1]}\nОписание: {ret[2]}\nЦена {ret[-1]}')
+@dp.message_handler(commands=["меню"])
+async def pizza_menu_command(message: types.Message):
+    await sqlite_db.sql_read(message)
+
 
 def register_handlers_client(dp: Dispatcher):
     dp.register_message_handler(command_start, commands=['start', 'help'])
     dp.register_message_handler(pizza_open_command, commands=['режим_работы'])
     dp.register_message_handler(pizza_place_command, commands=['адрес'])
+    dp.register_message_handler(pizza_menu_command, commands=['меню'])
