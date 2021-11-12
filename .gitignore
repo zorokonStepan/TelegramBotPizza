@@ -4,3 +4,5 @@ __pycache__
 handlers/__pycache__
 foto/
 test_var.py
+inline.py
+inline_search.py
